@@ -2,6 +2,19 @@
 
 A Model Context Protocol (MCP) server for Habitica integration, deployable on Vercel.
 
+## Project Structure
+
+```
+habitica-mcp-server/
+├── api/
+│   └── index.js          # Vercel serverless function
+├── api.js                # Habitica API client wrapper
+├── package.json          # Dependencies
+├── vercel.json           # Vercel configuration
+├── .env.example          # Environment variables template
+└── README.md             # This file
+```
+
 ## Deployment Instructions
 
 ### Deploy to Vercel
@@ -46,9 +59,9 @@ To find these credentials:
    export HABITICAAPITOKEN=your-api-token
    ```
 
-3. **Run the server**:
+3. **Run the server locally with Vercel CLI**:
    ```bash
-   npm start
+   vercel dev
    ```
 
 4. **Test the deployment**:
