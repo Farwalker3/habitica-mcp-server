@@ -1,9 +1,16 @@
-const { HabiticaApi } = require('habitica-api-client');
+const axios = require('axios');
 
-// Initialize Habitica client
-const api = new HabiticaApi({
-  userId: process.env.HABITICAUSERID || '',
-  apiToken: process.env.HABITICAAPITOKEN || ''
+// Habitica API base URL
+const API_URL = 'https://habitica.com/api/v3';
+
+// Create axios instance with auth headers
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'x-api-user': process.env.HABITICAUSERID || '',
+    'x-api-key': process.env.HABITICAAPITOKEN || '',
+    'Content-Type': 'application/json'
+  }
 });
 
 // Export serverless function
@@ -25,22 +32,28 @@ module.exports = async (req, res) => {
     let result;
     switch (action) {
       case 'getTasks':
-        result = await api.getTasks(data?.type);
+        const response = await api.get(`/tasks/user${data?.type ? `?type=${data.type}` : ''}`);
+        result = response.data;
         break;
       case 'createTask':
-        result = await api.createTask(data);
+        const createResponse = await api.post('/tasks/user', data);
+        result = createResponse.data;
         break;
       case 'updateTask':
-        result = await api.updateTask(data?.taskId, data?.task);
+        const updateResponse = await api.put(`/tasks/${data?.taskId}`, data?.task);
+        result = updateResponse.data;
         break;
       case 'deleteTask':
-        result = await api.deleteTask(data?.taskId);
+        const deleteResponse = await api.delete(`/tasks/${data?.taskId}`);
+        result = deleteResponse.data;
         break;
       case 'scoreTask':
-        result = await api.scoreTask(data?.taskId, data?.direction);
+        const scoreResponse = await api.post(`/tasks/${data?.taskId}/score/${data?.direction || 'up'}`);
+        result = scoreResponse.data;
         break;
       case 'getUserProfile':
-        result = await api.getUser();
+        const userResponse = await api.get('/user');
+        result = userResponse.data;
         break;
       default:
         return res.status(400).send({ error: `Unsupported action: ${action}` });
