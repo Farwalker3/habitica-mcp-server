@@ -1,12 +1,16 @@
 {
   "name": "habitica-mcp-server",
   "version": "1.0.0",
+  "private": true,
   "main": "api/index.js",
   "scripts": {
-    "start": "vercel dev",
-    "build": "npm install"
+    "dev": "vercel dev",
+    "build": "mkdir -p public"
   },
   "dependencies": {
     "axios": "^1.6.7"
+  },
+  "engines": {
+    "node": ">=14.x"
   }
 }
