@@ -1,16 +1,28 @@
 {
   "version": 2,
   "functions": {
-    "api/**/*.js": {
+    "api/mcp.js": {
+      "memory": 128,
+      "maxDuration": 30
+    },
+    "api/index.js": {
       "memory": 128,
       "maxDuration": 10
     }
   },
   "routes": [
     {
+      "src": "/mcp",
+      "dest": "/api/mcp"
+    },
+    {
+      "src": "/schema",
+      "dest": "/api/mcp"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/api"
+      "dest": "/api/index"
     }
   ],
-  "outputDirectory": "api"
+  "outputDirectory": "public"
 }

@@ -6,8 +6,10 @@ This is a Model Context Protocol (MCP) server for Habitica. It allows integratio
 
 The MCP protocol requires the following endpoints:
 
+- `/mcp` - Main MCP endpoint that handles:
+  - POST requests with JSON-RPC 2.0 for function calls
+  - GET requests for Server-Sent Events (SSE)
 - `/schema` - Returns the schema definition of models and functions
-- `/function/{functionName}` - Executes a function defined in the schema
 
 ## Available Functions
 
